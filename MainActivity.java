@@ -20,23 +20,36 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     private DatabaseHelper helper;
-    private EditText longitude, latitude;
+    private EditText distancia, longitude, latitude;
 
     private ListView list;
 
     List<Map<String, Object>> local;
 
-    String[] de = {"id", "longitude", "latitude"};
-    int[] para = {R.id.id, R.id.longitude, R.id.latitude};
+    String[] de = {"id", "distancia", "longitude", "latitude"};
+    int[] para = {R.id.id, R.id.distancia, R.id.longitude, R.id.latitude};
 
+
+    /*@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        helper = new DatabaseHelper(this);
+        helper.getWritableDatabase().execSQL("DROP TABLE IF EXISTS local");
+
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        distancia = findViewById(R.id.ET_distancia);
         longitude = findViewById(R.id.ET_Longitude);
         latitude = findViewById(R.id.ET_Latitude);
+
         list = (ListView) findViewById(R.id.list);
+
         helper = new DatabaseHelper(this);
         list.setClickable(true);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -59,18 +72,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void salvarLocal(View v){
-        if(!longitude.getText().toString().equals("") && !latitude.getText().toString().equals("")) {
+        if(!distancia.getText().toString().equals("")
+                && !longitude.getText().toString().equals("")
+                && !latitude.getText().toString().equals("")) {
             SQLiteDatabase db = helper.getWritableDatabase();
             ContentValues values = new ContentValues();
 
+            values.put("distancia", Double.parseDouble(distancia.getText().toString()));
             values.put("longitude", Double.parseDouble(longitude.getText().toString()));
             values.put("latitude", Double.parseDouble(latitude.getText().toString()));
 
             long result = db.insert("local", null, values);
             if (result != -1) {
                 Toast.makeText(this, "Registro salvo com sucesso!", Toast.LENGTH_SHORT).show();
+                distancia.setText("");
                 longitude.setText("");
                 latitude.setText("");
+                buscar(null);
             } else {
                 Toast.makeText(this, "Erro ao salvar!", Toast.LENGTH_SHORT).show();
             }
@@ -99,9 +117,11 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i<cursor.getCount(); i++){
             Map<String, Object> item = new HashMap<String, Object>();
             int id = cursor.getInt(0);
-            double longitude = cursor.getDouble(1);
-            double latitude = cursor.getDouble(2);
+            double distancia = cursor.getDouble(1);
+            double longitude = cursor.getDouble(2);
+            double latitude = cursor.getDouble(3);
             item.put("id", id);
+            item.put("distancia", distancia);
             item.put("longitude", longitude);
             item.put("latitude",  latitude);
             local.add(item);

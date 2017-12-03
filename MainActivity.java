@@ -86,13 +86,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
         txt_loc = findViewById(R.id.tv_localizacao);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        /*if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this,"Permissão para utilizar sensor negado pelo usuário!",Toast.LENGTH_LONG).show();
             return;
-        }*/
+        }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         txt_loc = findViewById(R.id.tv_localizacao);

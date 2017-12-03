@@ -23,9 +23,8 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.marcoshalberstadt.projetoalarmedeproximidade.MapsActivity;
+
 import com.example.marcoshalberstadt.projetoalarmedeproximidade.R;
-import com.example.marcoshalberstadt.projetoalarmedeproximidade.DatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,8 +45,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     int[] para = {R.id.id, R.id.distanceEditText, R.id.longitudeEditText, R.id.latitudeEditText};
 
     protected LocationManager locationManager;
-    TextView txt_loc;
-
 
     /*@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
         });
 
-        txt_loc = findViewById(R.id.locationTextView);
+
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
@@ -99,13 +96,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        txt_loc = findViewById(R.id.locationTextView);
-        txt_loc.setText("Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
         buscar(null);
     }
     @Override
     public void onLocationChanged(Location location) {
-        txt_loc.setText("Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
+
     }
 
     @Override

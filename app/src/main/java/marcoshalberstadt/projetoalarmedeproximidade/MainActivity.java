@@ -20,11 +20,8 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
-
-import com.example.marcoshalberstadt.projetoalarmedeproximidade.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,15 +31,15 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity implements LocationListener {
 
     private DatabaseHelper helper;
-    private EditText distance, longitude, latitude;
+    private EditText name, distance, longitude, latitude;
     private SensorManager sensorManager;
 
     private ListView list;
 
     List<Map<String, Object>> local;
 
-    String[] de = {"id", "distance", "longitude", "latitude"};
-    int[] para = {R.id.id, R.id.distanceEditText, R.id.longitudeEditText, R.id.latitudeEditText};
+    String[] de = {"id", "name", "distance", "longitude", "latitude"};
+    int[] para = {R.id.idTextView, R.id.nameTextView, R.id.distanceTextView, R.id.longitudeTextView, R.id.latitudeTextView};
 
     protected LocationManager locationManager;
 
@@ -60,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        name = findViewById(R.id.nameEditText);
         distance = findViewById(R.id.distanceEditText);
         longitude = findViewById(R.id.longitudeEditText);
         latitude = findViewById(R.id.latitudeEditText);
@@ -124,12 +122,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     public void salvarLocal(View v){
-        if(!distance.getText().toString().equals("")
-                && !longitude.getText().toString().equals("")
-                && !latitude.getText().toString().equals("")) {
+        if( !name.getText().toString().isEmpty() &&
+            !distance.getText().toString().isEmpty() &&
+            !longitude.getText().toString().isEmpty() &&
+            !latitude.getText().toString().isEmpty()) {
             SQLiteDatabase db = helper.getWritableDatabase();
             ContentValues values = new ContentValues();
 
+            values.put("name", name.getText().toString());
             values.put("distance", Double.parseDouble(distance.getText().toString()));
             values.put("longitude", Double.parseDouble(longitude.getText().toString()));
             values.put("latitude", Double.parseDouble(latitude.getText().toString()));
@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             long result = db.insert("local", null, values);
             if (result != -1) {
                 Toast.makeText(this, "Registro salvo com sucesso!", Toast.LENGTH_SHORT).show();
+                name.setText("");
                 distance.setText("");
                 longitude.setText("");
                 latitude.setText("");
@@ -169,10 +170,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         for(int i = 0; i<cursor.getCount(); i++){
             Map<String, Object> item = new HashMap<String, Object>();
             int id = cursor.getInt(0);
-            double distance = cursor.getDouble(1);
-            double longitude = cursor.getDouble(2);
-            double latitude = cursor.getDouble(3);
+            String name = cursor.getString(1);
+            double distance = cursor.getDouble(2);
+            double longitude = cursor.getDouble(3);
+            double latitude = cursor.getDouble(4);
             item.put("id", id);
+            item.put("name", name);
             item.put("distance", distance);
             item.put("longitude", longitude);
             item.put("latitude",  latitude);

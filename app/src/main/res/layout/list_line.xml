@@ -9,7 +9,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/id"
+            android:id="@+id/idTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/distancia"
+            android:id="@+id/distanceTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/distance"
@@ -39,7 +39,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <TextView
-            android:id="@+id/longitude"
+            android:id="@+id/longitudeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/longitude"
@@ -47,7 +47,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <TextView
-            android:id="@+id/latitude"
+            android:id="@+id/latitudeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/latitude"

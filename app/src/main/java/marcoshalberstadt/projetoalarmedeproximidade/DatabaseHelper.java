@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String BANCO_DE_DADOS = "local";
-    private static int VERSAO = 3;
+    private static int VERSAO = 1;
 
     public DatabaseHelper (Context context){
         super(context, BANCO_DE_DADOS, null, VERSAO );
@@ -22,7 +22,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE local (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
-                "distancia DOUBLE, " +
+                "name TEXT, " +
+                "distance DOUBLE, " +
                 "longitude DOUBLE, " +
                 "latitude DOUBLE);");
     }

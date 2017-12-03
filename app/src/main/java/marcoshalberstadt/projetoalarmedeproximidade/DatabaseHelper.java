@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String BANCO_DE_DADOS = "local";
-    private static int VERSAO = 1;
+    private static int VERSAO = 4;
 
     public DatabaseHelper (Context context){
         super(context, BANCO_DE_DADOS, null, VERSAO );

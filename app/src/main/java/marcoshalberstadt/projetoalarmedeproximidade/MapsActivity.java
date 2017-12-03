@@ -3,7 +3,7 @@ package marcoshalberstadt.projetoalarmedeproximidade;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
-import com.example.marcoshalberstadt.projetoalarmedeproximidade.R;
+import marcoshalberstadt.projetoalarmedeproximidade.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

@@ -1,16 +1,26 @@
 package com.example.marcoshalberstadt.projetoalarmedeproximidade;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.hardware.SensorManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -18,10 +28,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LocationListener {
 
     private DatabaseHelper helper;
     private EditText distancia, longitude, latitude;
+    private SensorManager smngr;
 
     private ListView list;
 
@@ -29,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
 
     String[] de = {"id", "distancia", "longitude", "latitude"};
     int[] para = {R.id.id, R.id.distancia, R.id.longitude, R.id.latitude};
+
+    protected LocationManager locationManager;
+    TextView txt_loc;
 
 
     /*@Override
@@ -49,18 +63,18 @@ public class MainActivity extends AppCompatActivity {
         longitude = findViewById(R.id.ET_Longitude);
         latitude = findViewById(R.id.ET_Latitude);
 
-        list = (ListView) findViewById(R.id.list);
+        list = findViewById(R.id.list);
 
         helper = new DatabaseHelper(this);
         list.setClickable(true);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3){
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 String idDados = String.valueOf(local.get(position).get("id"));
                 SQLiteDatabase db = helper.getWritableDatabase();
-                String where [] = new String[] {idDados};
+                String where[] = new String[]{idDados};
 
-                long  result = db.delete("local", "id = ?", where);
+                long result = db.delete("local", "id = ?", where);
                 if (result != -1) {
                     Toast.makeText(MainActivity.this, "Registro " + idDados + " excluído com sucesso!", Toast.LENGTH_SHORT).show();
                     buscar(null);
@@ -69,8 +83,42 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        txt_loc = findViewById(R.id.tv_localizacao);
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        /*if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this,"Permissão para utilizar sensor negado pelo usuário!",Toast.LENGTH_LONG).show();
+            return;
+        }*/
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        txt_loc = findViewById(R.id.tv_localizacao);
+        txt_loc.setText("Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
         buscar(null);
     }
+    @Override
+    public void onLocationChanged(Location location) {
+        txt_loc.setText("Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        Log.d("Latitude","disable");
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+        Log.d("Latitude","enable");
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        Log.d("Latitude","status");
+    }
+
     public void SelecionarLocal(View v){
         Intent i = new Intent(this,MapsActivity.class);
         startActivity(i);

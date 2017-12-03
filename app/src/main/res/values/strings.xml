@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">ProjetoAlarmeDeProximidade</string>
     <string name="title_activity_maps">Map</string>
-    <string name="distancia">Distancia</string>
+    <string name="name">Nome do ponto</string>
+    <string name="distance">Distância</string>
     <string name="longitude">Longitude</string>
     <string name="latitude">Latitude</string>
-    <string name="adicionar">Adicionar</string>
-    <string name="selecionar">Selecionar</string>
+    <string name="location">Localização</string>
+    <string name="add">Adicionar</string>
+    <string name="select">Selecionar</string>
 </resources>

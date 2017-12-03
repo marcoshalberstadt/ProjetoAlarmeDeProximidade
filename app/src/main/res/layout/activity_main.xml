@@ -38,6 +38,13 @@
         android:onClick="salvarLocal"
         android:text="@string/adicionar" />
 
+    <Button
+        android:id="@+id/But_Selecionar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="SelecionarLocal"
+        android:text="@string/selecionar" />
+
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"

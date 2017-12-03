@@ -8,11 +8,19 @@
     tools:context="com.example.marcoshalberstadt.projetoalarmedeproximidade.MainActivity">
 
     <EditText
+        android:id="@+id/ET_distancia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/distancia"
+        android:inputType="numberDecimal" />
+
+    <EditText
         android:id="@+id/ET_Longitude"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Longitude"
+        android:hint="@string/longitude"
         android:inputType="numberDecimal" />
 
     <EditText
@@ -20,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Latitude"
+        android:hint="@string/latitude"
         android:inputType="numberDecimal" />
 
     <Button
@@ -28,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="salvarLocal"
-        android:text="Adicionar" />
+        android:text="@string/adicionar" />
 
     <ListView
         android:id="@+id/list"

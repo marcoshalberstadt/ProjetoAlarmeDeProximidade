@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     public void SelecionarLocal(View v){
         Intent i = new Intent(this, MapsActivity.class);
-        startActivity(i);
+        startActivityForResult(i, 999);
     }
 
     public void salvarLocal(View v){
@@ -184,5 +184,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         }
         cursor.close();
         return local;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == 999){
+            Toast.makeText(MainActivity.this, data.getExtras().get("lat").toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

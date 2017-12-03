@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:text="@string/distance"
             android:layout_weight="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <TextView
             android:id="@+id/longitude"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:text="@string/longitude"
             android:layout_weight="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <TextView
             android:id="@+id/latitude"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:text="@string/latitude"
             android:layout_weight="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     </LinearLayout>
 </LinearLayout>

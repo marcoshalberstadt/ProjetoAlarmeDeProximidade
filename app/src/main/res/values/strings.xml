@@ -2,10 +2,10 @@
     <string name="app_name">ProjetoAlarmeDeProximidade</string>
     <string name="title_activity_maps">Map</string>
     <string name="name">Nome do ponto</string>
-    <string name="distance">Distância</string>
+    <string name="distance">Distância para o alarme</string>
     <string name="longitude">Longitude</string>
     <string name="latitude">Latitude</string>
     <string name="location">Localização</string>
     <string name="add">Adicionar</string>
-    <string name="select">Selecionar</string>
+    <string name="select">Selecionar local no mapa</string>
 </resources>

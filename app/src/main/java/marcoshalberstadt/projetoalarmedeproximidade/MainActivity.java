@@ -1,4 +1,4 @@
-package com.example.marcoshalberstadt.projetoalarmedeproximidade;
+package marcoshalberstadt.projetoalarmedeproximidade;
 
 import android.Manifest;
 import android.content.Context;
@@ -23,6 +23,10 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.marcoshalberstadt.projetoalarmedeproximidade.MapsActivity;
+import com.example.marcoshalberstadt.projetoalarmedeproximidade.R;
+import com.example.marcoshalberstadt.projetoalarmedeproximidade.DatabaseHelper;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,15 +35,15 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity implements LocationListener {
 
     private DatabaseHelper helper;
-    private EditText distancia, longitude, latitude;
-    private SensorManager smngr;
+    private EditText distance, longitude, latitude;
+    private SensorManager sensorManager;
 
     private ListView list;
 
     List<Map<String, Object>> local;
 
-    String[] de = {"id", "distancia", "longitude", "latitude"};
-    int[] para = {R.id.id, R.id.distancia, R.id.longitude, R.id.latitude};
+    String[] de = {"id", "distance", "longitude", "latitude"};
+    int[] para = {R.id.id, R.id.distanceEditText, R.id.longitudeEditText, R.id.latitudeEditText};
 
     protected LocationManager locationManager;
     TextView txt_loc;
@@ -59,9 +63,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        distancia = findViewById(R.id.ET_distancia);
-        longitude = findViewById(R.id.ET_Longitude);
-        latitude = findViewById(R.id.ET_Latitude);
+        distance = findViewById(R.id.distanceEditText);
+        longitude = findViewById(R.id.longitudeEditText);
+        latitude = findViewById(R.id.latitudeEditText);
 
         list = findViewById(R.id.list);
 
@@ -84,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             }
         });
 
-        txt_loc = findViewById(R.id.tv_localizacao);
+        txt_loc = findViewById(R.id.locationTextView);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED
@@ -95,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        txt_loc = findViewById(R.id.tv_localizacao);
+        txt_loc = findViewById(R.id.locationTextView);
         txt_loc.setText("Latitude:" + location.getLatitude() + ", Longitude:" + location.getLongitude());
         buscar(null);
     }
@@ -120,25 +124,25 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     public void SelecionarLocal(View v){
-        Intent i = new Intent(this,MapsActivity.class);
+        Intent i = new Intent(this, MapsActivity.class);
         startActivity(i);
     }
 
     public void salvarLocal(View v){
-        if(!distancia.getText().toString().equals("")
+        if(!distance.getText().toString().equals("")
                 && !longitude.getText().toString().equals("")
                 && !latitude.getText().toString().equals("")) {
             SQLiteDatabase db = helper.getWritableDatabase();
             ContentValues values = new ContentValues();
 
-            values.put("distancia", Double.parseDouble(distancia.getText().toString()));
+            values.put("distance", Double.parseDouble(distance.getText().toString()));
             values.put("longitude", Double.parseDouble(longitude.getText().toString()));
             values.put("latitude", Double.parseDouble(latitude.getText().toString()));
 
             long result = db.insert("local", null, values);
             if (result != -1) {
                 Toast.makeText(this, "Registro salvo com sucesso!", Toast.LENGTH_SHORT).show();
-                distancia.setText("");
+                distance.setText("");
                 longitude.setText("");
                 latitude.setText("");
                 buscar(null);
@@ -170,11 +174,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         for(int i = 0; i<cursor.getCount(); i++){
             Map<String, Object> item = new HashMap<String, Object>();
             int id = cursor.getInt(0);
-            double distancia = cursor.getDouble(1);
+            double distance = cursor.getDouble(1);
             double longitude = cursor.getDouble(2);
             double latitude = cursor.getDouble(3);
             item.put("id", id);
-            item.put("distancia", distancia);
+            item.put("distance", distance);
             item.put("longitude", longitude);
             item.put("latitude",  latitude);
             local.add(item);

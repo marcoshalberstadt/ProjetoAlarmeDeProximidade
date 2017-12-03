@@ -1,4 +1,4 @@
-package com.example.marcoshalberstadt.projetoalarmedeproximidade;
+package marcoshalberstadt.projetoalarmedeproximidade;
 
 import android.database.sqlite.SQLiteOpenHelper;
 

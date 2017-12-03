@@ -8,15 +8,22 @@
     tools:context="com.example.marcoshalberstadt.projetoalarmedeproximidade.MainActivity">
 
     <EditText
-        android:id="@+id/ET_distancia"
+        android:id="@+id/nameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/distancia"
-        android:inputType="numberDecimal" />
+        android:hint="@string/name"/>
 
     <EditText
-        android:id="@+id/ET_Longitude"
+        android:id="@+id/distanceEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/distance"
+        android:inputType="numberDecimal"/>
+
+    <EditText
+        android:id="@+id/longitudeEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -24,7 +31,7 @@
         android:inputType="numberDecimal" />
 
     <EditText
-        android:id="@+id/ET_Latitude"
+        android:id="@+id/latitudeEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -32,25 +39,25 @@
         android:inputType="numberDecimal" />
 
     <TextView
-        android:id="@+id/tv_localizacao"
+        android:id="@+id/locationTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Localização"
+        android:text="@string/location"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <Button
-        android:id="@+id/But_Adicionar"
+        android:id="@+id/addButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="salvarLocal"
-        android:text="@string/adicionar" />
+        android:text="@string/add" />
 
     <Button
-        android:id="@+id/But_Selecionar"
+        android:id="@+id/selectButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="SelecionarLocal"
-        android:text="@string/selecionar" />
+        android:text="@string/select" />
 
     <ListView
         android:id="@+id/list"

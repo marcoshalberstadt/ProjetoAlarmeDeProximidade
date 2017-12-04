@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ProjetoAlarmeDeProximidade.iml" filepath="$PROJECT_DIR$/ProjetoAlarmeDeProximidade.iml" />
-      <module fileurl="file://G:\Android\ProjetoAlarmeDeProximidade\ProjetoAlarmeDeProximidade.iml" filepath="G:\Android\ProjetoAlarmeDeProximidade\ProjetoAlarmeDeProximidade.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://G:\Android\ProjetoAlarmeDeProximidade\app\app.iml" filepath="G:\Android\ProjetoAlarmeDeProximidade\app\app.iml" />
     </modules>
   </component>
 </project>

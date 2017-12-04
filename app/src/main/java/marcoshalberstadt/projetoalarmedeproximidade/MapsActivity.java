@@ -21,11 +21,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Marker lastMarker = null;
     private LatLng latitlong;
     private GoogleMap mMap;
+    private double currentLat = 0;
+    private double currentLong = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
+        Intent i = getIntent();
+        currentLat = (double) i.getExtras().get("currentLat");
+        currentLong = (double) i.getExtras().get("currentLong");
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -57,6 +64,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        LatLng currentLocation = new LatLng(currentLat, currentLong);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+        mMap.animateCamera( CameraUpdateFactory.zoomTo( 21.0f ) );
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
@@ -73,7 +83,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onButtonClicked(View v){
         if(lastMarker != null){
             Intent returnIntent = new Intent();
-            returnIntent.putExtra("lat", latitlong);
+            returnIntent.putExtra("latlong", latitlong);
             setResult(Activity.RESULT_OK, returnIntent);
             finish();
         }else{

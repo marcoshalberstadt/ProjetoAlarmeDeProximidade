@@ -4,17 +4,22 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import marcoshalberstadt.projetoalarmedeproximidade.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-
+    private Marker lastMarker = null;
+    private LatLng latitlong;
     private GoogleMap mMap;
 
     @Override
@@ -46,7 +51,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-    }*/
+    }
+*/
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -54,12 +60,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra("lat",latLng);
-                setResult(Activity.RESULT_OK,returnIntent);
-                finish();
+
+                if(lastMarker != null){
+                    lastMarker.remove();
+                }
+                latitlong = latLng;
+                lastMarker =  mMap.addMarker(new MarkerOptions().position(latLng).icon(BitmapDescriptorFactory.defaultMarker()));
             }
         });
+    }
+
+    public void onButtonClicked(View v){
+        if(lastMarker != null){
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("lat", latitlong);
+            setResult(Activity.RESULT_OK, returnIntent);
+            finish();
+        }else{
+            Toast.makeText(this, "Nenhum local escolhido!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 }

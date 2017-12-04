@@ -23,19 +23,19 @@
         android:inputType="numberDecimal"/>
 
     <EditText
-        android:id="@+id/longitudeEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/longitude"
-        android:inputType="numberDecimal" />
-
-    <EditText
         android:id="@+id/latitudeEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/latitude"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/longitudeEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/longitude"
         android:inputType="numberDecimal" />
 
     <Button

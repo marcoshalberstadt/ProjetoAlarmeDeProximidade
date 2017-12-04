@@ -23,6 +23,8 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -96,9 +98,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         buscar(null);
     }
+
+
     @Override
     public void onLocationChanged(Location location) {
+        //Inserir código para calculo da distãncia
 
+        //Toast.makeText(this, location.getLatitude() + "," + location.getLongitude(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -122,10 +128,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     }
 
     public void salvarLocal(View v){
-        if( !name.getText().toString().isEmpty() &&
-            !distance.getText().toString().isEmpty() &&
-            !longitude.getText().toString().isEmpty() &&
-            !latitude.getText().toString().isEmpty()) {
+        try {
+            validateFields();
             SQLiteDatabase db = helper.getWritableDatabase();
             ContentValues values = new ContentValues();
 
@@ -145,8 +149,27 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
             } else {
                 Toast.makeText(this, "Erro ao salvar!", Toast.LENGTH_SHORT).show();
             }
-        }else{
-            Toast.makeText(this, "Campos não podem estar vazios!", Toast.LENGTH_SHORT).show();
+        }catch(Exception ex){
+            Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void validateFields() throws Exception{
+        if(name.getText().toString().isEmpty()){
+           throw new Exception("Nome vazio!");
+        }
+
+        if(distance.getText().toString().isEmpty()){
+            throw new Exception("Distância vazia!");
+        }
+
+
+        if(longitude.getText().toString().isEmpty()){
+            throw new Exception("Longitude vazia!");
+        }
+
+        if(latitude.getText().toString().isEmpty()){
+            throw new Exception("Latitude vazia!");
         }
     }
 
@@ -188,8 +211,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == 999){
-            Toast.makeText(MainActivity.this, data.getExtras().get("lat").toString(), Toast.LENGTH_SHORT).show();
-        }
+
+            if (resultCode == RESULT_OK && requestCode == 999) {
+                Toast.makeText(MainActivity.this, data.getExtras().get("lat").toString(), Toast.LENGTH_SHORT).show();
+                LatLng latlng = (LatLng) data.getExtras().get("lat");
+                latitude.setText(String.valueOf(latlng.latitude));
+                longitude.setText(String.valueOf(latlng.longitude));
+            }
     }
 }
